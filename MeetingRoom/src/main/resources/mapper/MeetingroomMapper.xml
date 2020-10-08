@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kgc.mapper.MeetingroomMapper" >
+  <resultMap id="BaseResultMap" type="com.kgc.pojo.Meetingroom" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="meeting_name" property="meetingName" jdbcType="VARCHAR" />
+    <result column="meeting_order" property="meetingOrder" jdbcType="DATE" />
+    <result column="advance_name" property="advanceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, meeting_name, meeting_order, advance_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kgc.pojo.MeetingroomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from meetingroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetingroom
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from meetingroom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kgc.pojo.MeetingroomExample" >
+    delete from meetingroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kgc.pojo.Meetingroom" >
+    insert into meetingroom (id, meeting_name, meeting_order, 
+      advance_name)
+    values (#{id,jdbcType=INTEGER}, #{meetingName,jdbcType=VARCHAR}, #{meetingOrder,jdbcType=DATE}, 
+      #{advanceName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kgc.pojo.Meetingroom" >
+    insert into meetingroom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="meetingName != null" >
+        meeting_name,
+      </if>
+      <if test="meetingOrder != null" >
+        meeting_order,
+      </if>
+      <if test="advanceName != null" >
+        advance_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="meetingName != null" >
+        #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingOrder != null" >
+        #{meetingOrder,jdbcType=DATE},
+      </if>
+      <if test="advanceName != null" >
+        #{advanceName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kgc.pojo.MeetingroomExample" resultType="java.lang.Integer" >
+    select count(*) from meetingroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update meetingroom
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.meetingName != null" >
+        meeting_name = #{record.meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingOrder != null" >
+        meeting_order = #{record.meetingOrder,jdbcType=DATE},
+      </if>
+      <if test="record.advanceName != null" >
+        advance_name = #{record.advanceName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update meetingroom
+    set id = #{record.id,jdbcType=INTEGER},
+      meeting_name = #{record.meetingName,jdbcType=VARCHAR},
+      meeting_order = #{record.meetingOrder,jdbcType=DATE},
+      advance_name = #{record.advanceName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kgc.pojo.Meetingroom" >
+    update meetingroom
+    <set >
+      <if test="meetingName != null" >
+        meeting_name = #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingOrder != null" >
+        meeting_order = #{meetingOrder,jdbcType=DATE},
+      </if>
+      <if test="advanceName != null" >
+        advance_name = #{advanceName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kgc.pojo.Meetingroom" >
+    update meetingroom
+    set meeting_name = #{meetingName,jdbcType=VARCHAR},
+      meeting_order = #{meetingOrder,jdbcType=DATE},
+      advance_name = #{advanceName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
